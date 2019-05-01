@@ -1,24 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
 
 function App() {
+  const [key, setKey] = useState(null);
+
+  useEffect(() => {
+    window.addEventListener("keypress", e => {
+      setKey(e);
+    });
+
+    return () => {
+      window.removeEventListener("keypress");
+    };
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ textAlign: "center" }}>
+      <h1>Key Code Viewer</h1>
+      <div>
+        {key ? (
+          <>
+            <h1 style={{ fontSize: "4rem" }}>{key.key}</h1>
+            <h1 style={{ fontSize: "4rem" }}>{key.keyCode}</h1>
+          </>
+        ) : (
+          <h1>Press a key to get its key code</h1>
+        )}
+      </div>
     </div>
   );
 }
